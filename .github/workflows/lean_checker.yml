@@ -1,0 +1,33 @@
+name: Leaan HPT Checker
+
+on:
+  schedule:
+    # Every hour, on the hour (UTC)
+    - cron: "0 * * * *"
+  workflow_dispatch:  # allow manual trigger from Actions UI
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run checker
+        env:
+          NTFY_TOPIC: hpt-2025-alerts-gadi
+          # Optional: override ntfy server if you self-host:
+          # NTFY_BASE_URL: ${{ secrets.NTFY_BASE_URL }}
+        run: |
+          python leaan_checker.py
