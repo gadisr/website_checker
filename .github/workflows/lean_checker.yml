@@ -30,4 +30,4 @@ jobs:
           # Optional: override ntfy server if you self-host:
           # NTFY_BASE_URL: ${{ secrets.NTFY_BASE_URL }}
         run: |
-          python leaan_checker.py
+          python lean_checker.py
